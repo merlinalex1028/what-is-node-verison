@@ -2,7 +2,7 @@
   "publisher": "merlinalex",
   "name": "what-is-node-version",
   "displayName": "What Is Node Version?",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "packageManager": "pnpm@9.5.0",
   "description": "",
   "author": "Merlin Alex <merlinalex@qq.com>",
@@ -24,7 +24,7 @@
     "dist"
   ],
   "engines": {
-    "vscode": "^1.90.0"
+    "vscode": "^1.91.0"
   },
   "activationEvents": [
     "onStartupFinished"
