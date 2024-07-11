@@ -1,6 +1,10 @@
 import { exec } from 'node:child_process'
 import type { ExtensionContext } from 'vscode'
-import { StatusBarAlignment, window } from 'vscode'
+import { StatusBarAlignment, window, workspace } from 'vscode'
+
+function getUseVersion(): string {
+  return workspace.getConfiguration('what-is-node-version').get('useVersion') as string
+}
 
 function getNodeVersion(): Promise<string> {
   return new Promise((resolve) => {
@@ -19,6 +23,8 @@ export function activate(context: ExtensionContext) {
   let statusBarName = ''
   let statusBarColor: string | undefined
 
+  const useVersion = getUseVersion()
+
   const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 100000)
 
   async function updateStatusBarItem() {
@@ -31,13 +37,30 @@ export function activate(context: ExtensionContext) {
     statusBarItem.show()
   }
 
+  async function isRightVersion() {
+    const nowVersion = (await getNodeVersion()).split('v')[1]
+    return nowVersion === useVersion
+  }
+
   context.subscriptions.push(statusBarItem)
 
   updateStatusBarItem()
 
+  let message: Thenable<string | undefined> | undefined
+
   setInterval(() => {
     updateStatusBarItem()
   }, 5000)
+
+  window.onDidOpenTerminal(async () => {
+    const res = await isRightVersion()
+    if (!res && !message) {
+      message = window.showErrorMessage('Node version is wrong, please change to use the right version')
+      message.then(() => {
+        message = undefined
+      })
+    }
+  })
 }
 
 export function deactivate() {

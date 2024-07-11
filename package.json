@@ -29,6 +29,19 @@
   "activationEvents": [
     "onStartupFinished"
   ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "What Is Node Version extension configuration",
+      "properties": {
+        "what-is-node-version.useVersion": {
+          "type": "string",
+          "default": "",
+          "description": "The node version you project use."
+        }
+      }
+    }
+  },
   "scripts": {
     "build": "tsup src/index.ts --external vscode",
     "dev": "nr build --watch",
