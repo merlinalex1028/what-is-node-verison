@@ -2,7 +2,7 @@
   "publisher": "merlinalex",
   "name": "what-is-node-version",
   "displayName": "What Is Node Version?",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packageManager": "pnpm@9.5.0",
   "description": "",
   "author": "Merlin Alex <merlinalex@qq.com>",
