@@ -39,7 +39,14 @@ export function activate(context: ExtensionContext) {
 
   async function isRightVersion() {
     const nowVersion = (await getNodeVersion()).split('v')[1]
-    return nowVersion === useVersion
+
+    if (nowVersion) {
+      return nowVersion === useVersion
+    }
+    else {
+      // if can't get the version, don't show the message
+      return true
+    }
   }
 
   context.subscriptions.push(statusBarItem)
