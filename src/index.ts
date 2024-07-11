@@ -34,6 +34,10 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(statusBarItem)
 
   updateStatusBarItem()
+
+  setInterval(() => {
+    updateStatusBarItem()
+  }, 5000)
 }
 
 export function deactivate() {
