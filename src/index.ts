@@ -22,8 +22,9 @@ function getNodeVersion(): Promise<string> {
 export function activate(context: ExtensionContext) {
   let statusBarName = ''
   let statusBarColor: string | undefined
+  let useVersion: string | undefined
 
-  const useVersion = getUseVersion()
+  useVersion = getUseVersion()
 
   const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 100000)
 
@@ -38,9 +39,9 @@ export function activate(context: ExtensionContext) {
   }
 
   async function isRightVersion() {
-    const nowVersion = (await getNodeVersion()).split('v')[1]
+    const nowVersion = (await getNodeVersion()).split('v')[1].split('\n')[0]
 
-    if (nowVersion) {
+    if (useVersion) {
       return nowVersion === useVersion
     }
     else {
@@ -62,6 +63,10 @@ export function activate(context: ExtensionContext) {
     if (!res) {
       window.showErrorMessage('Node version is wrong, please change to use the right version')
     }
+  })
+
+  workspace.onDidChangeConfiguration(() => {
+    useVersion = getUseVersion()
   })
 }
 
