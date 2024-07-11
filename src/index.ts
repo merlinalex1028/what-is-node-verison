@@ -53,19 +53,14 @@ export function activate(context: ExtensionContext) {
 
   updateStatusBarItem()
 
-  let message: Thenable<string | undefined> | undefined
-
   setInterval(() => {
     updateStatusBarItem()
   }, 5000)
 
   window.onDidOpenTerminal(async () => {
     const res = await isRightVersion()
-    if (!res && !message) {
-      message = window.showErrorMessage('Node version is wrong, please change to use the right version')
-      message.then(() => {
-        message = undefined
-      })
+    if (!res) {
+      window.showErrorMessage('Node version is wrong, please change to use the right version')
     }
   })
 }
