@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process'
 import type { ExtensionContext } from 'vscode'
-import { StatusBarAlignment, window, workspace } from 'vscode'
+import { StatusBarAlignment, commands, window, workspace } from 'vscode'
 
 function getUseVersion(): string {
   return workspace.getConfiguration('what-is-node-version').get('useVersion') as string
@@ -28,12 +28,21 @@ export function activate(context: ExtensionContext) {
 
   const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 100000)
 
+  // 注册命令
+  const disposable = commands.registerCommand('extension.openTerminal', () => {
+    // 创建一个新的终端
+    const terminal = window.createTerminal(`Ext Terminal`)
+    terminal.show(true) // true表示终端在获得焦点时会被带到前台
+  })
+
+  context.subscriptions.push(disposable)
+
   async function updateStatusBarItem() {
     statusBarName = await getNodeVersion()
     statusBarColor = '#297583'
     statusBarItem.text = statusBarName
     statusBarItem.color = statusBarColor
-    statusBarItem.command = 'workbench.action.quickSwitchWindow'
+    statusBarItem.command = 'extension.openTerminal'
     statusBarItem.tooltip = 'Node Version'
     statusBarItem.show()
   }

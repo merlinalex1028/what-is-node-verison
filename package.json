@@ -30,6 +30,12 @@
     "onStartupFinished"
   ],
   "contributes": {
+    "commands": [
+      {
+        "command": "extension.openTerminal",
+        "title": "Open Terminal"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "What Is Node Version extension configuration",
@@ -41,6 +47,7 @@
         }
       }
     }
+
   },
   "scripts": {
     "build": "tsup src/index.ts --external vscode",

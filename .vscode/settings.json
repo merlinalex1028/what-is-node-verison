@@ -37,7 +37,5 @@
     "json",
     "jsonc",
     "yaml"
-  ],
-
-  "what-is-node-version.useVersion": "22.3.0"
+  ]
 }
